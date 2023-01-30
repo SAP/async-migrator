@@ -15,6 +15,7 @@ In case you are the maintainer of a new SAP open source project, these are the s
 ***
 
 # Our new open source project
+[![REUSE status](https://api.reuse.software/badge/github.com/SAP/async-migrator)](https://api.reuse.software/info/github.com/SAP/async-migrator)
 
 ## About this project
 

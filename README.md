@@ -45,11 +45,12 @@ Check sampes in the samples/ folder.
 
 ## Requirements and Setup
 Required is Node.js runtime version 14 or higher. 
-'''
+
+```
 git clone https://github.com/SAP/async-migrator.git
 cd async-migrator
 npm install . 
-'''
+```
 
 ## Support, Feedback, Contributing
 

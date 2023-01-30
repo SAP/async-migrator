@@ -1,0 +1,6 @@
+---
+applications:
+- name: samplexs
+  buildpack: nodejs_buildpack
+  services:
+    - hdi-xsjs-fibers

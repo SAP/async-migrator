@@ -1,0 +1,15 @@
+{
+  "getConnection": "getConnection",
+  "getResponse": "getResponse",
+  "setBody": "setBody",
+  "import": "import",
+  "executeQuery": "executeQuery",
+  "executeUpdate": "executeUpdate",
+  "execute": "execute",
+  "loadProcedure": "loadProcedure",
+  "commit": "commit",
+  "rollback": "rollback",
+  "readDestination": "readDestination",
+  "Zip": "Zip",
+  "Job": "Job"
+}

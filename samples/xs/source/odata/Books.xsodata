@@ -1,0 +1,13 @@
+service {
+    "com.sap.xs2.tests::AddressBook.Book" as "AddressBooks"
+    create using "odata.lib:crud.xsjslib::createEntry"
+	update using "odata.lib:crud.xsjslib::updateEntry"
+	delete using "odata.lib:crud.xsjslib::deleteEntry";
+}
+
+annotations {
+   enable OData4SAP;
+}
+settings {
+    support null;
+}

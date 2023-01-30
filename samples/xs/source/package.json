@@ -1,0 +1,22 @@
+{
+  "name": "xs",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node --experimental-vm-modules index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@sap/xsenv": "^3.4.0",
+    "@sap/async-xsjs": "file:../../sap-async-xsjs-6.7.1.tgz"
+  },
+  "engines": {
+    "node": "16.x"
+  }
+}

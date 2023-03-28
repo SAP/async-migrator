@@ -144,12 +144,15 @@ async function promisifyWorkFile(workFile, controller){
 }
 
 async function generateJS(parsedFile){
-  let ast = JSON.parse(await fsp.readFile(parsedFile.work, 'utf-8'));
+  let source = await fsp.readFile(parsedFile.source, 'utf-8');
+  let ast = JSON.parse(await fsp.readFile(parsedFile.work, 'utf-8')); 
   ast = escodegen.attachComments(ast, ast.comments, ast.tokens);
   let transformedContent = escodegen.generate(ast, {
 		comment: true,
+		sourceCode: source,
 		format:{
 			quotes: 'auto',
+			preserveBlankLines: true,
 			escapeless: true
 		}
   });

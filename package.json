@@ -1,0 +1,39 @@
+{
+  "name": "async-migrator",
+  "description": "Command line tool for code transformation to async/await programming model",
+  "homepage": "http://github.com/SAP/async-migrator",
+  "main": "src/index.js",
+  "bin": {
+    "async-migrate": "./src/index.js"
+  },
+  "version": "1.0.0",
+  "files": [
+    "src"
+  ],
+  "engines": {
+    "node": ">=4"
+  },
+  "author": {
+    "name": "Samir Zeort",
+    "email": "samir.zeort@sap.com"
+  },
+  "maintainers": [
+    {
+      "name": "Samir Zeort",
+      "email": "samir.zeort@sap.com"
+    }
+  ],
+  "repository": {
+    "type": "git",
+    "url": "http://github.com/SAP/async-migrator.git"
+  },
+  "license": "Apache License, Version 2.0",
+  "keywords": [
+    "async",
+	"await",
+    "xs",
+	"xsjs"
+  ],
+  "scripts": {
+  }
+}

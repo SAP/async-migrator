@@ -11,5 +11,6 @@
   "rollback": "rollback",
   "readDestination": "readDestination",
   "Zip": "Zip",
-  "Job": "Job"
+  "Job": "Job",
+  "next": "next"
 }

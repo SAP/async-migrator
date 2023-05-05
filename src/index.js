@@ -146,13 +146,27 @@ async function promisifyWorkFile(workFile, controller){
 }
 
 async function generateJS(parsedFile){
+  let sourceCode = await fsp.readFile(parsedFile.source, 'utf-8');
   let ast = JSON.parse(await fsp.readFile(parsedFile.work, 'utf-8'));
-  ast = escodegen.attachComments(ast, ast.comments, ast.tokens);
+  try {
+	ast = escodegen.attachComments(ast, ast.comments, ast.tokens);  
+  } catch(x){
+	//Fallback: try attach comments one by one 
+	for(let comment of ast.comments){
+	  try{
+	    ast = escodegen.attachComments(ast, comment, ast.tokens); 
+	  } catch(x) {
+	    console.log(parsedFile.target,':Failed to attach comment', comment);	  
+	  }
+	}
+  }
   let transformedContent = escodegen.generate(ast, {
 		comment: true,
+		sourceCode: sourceCode,
 		format:{
 			quotes: 'auto',
-			escapeless: true
+			escapeless: true,
+			preserveBlankLines: true
 		}
   });
   var exportNames = getExportNames(ast);

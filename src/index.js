@@ -46,7 +46,7 @@ async function main() {
   var controller = {
 	"asyncs": 0,
 	"awaits": 0,
-	functionMap: JSON.parse(await fsp.readFile(ffunctionMap, 'utf-8'))
+	functionMap: new Map(Object.entries(JSON.parse(await fsp.readFile(ffunctionMap, 'utf-8'))))
   }
   
   var statSource = await fsp.stat(source);
@@ -202,7 +202,7 @@ function promisifyAst(ast, parentAst, contextFunction, controller){
 				console.log('Uncategorized callee');
 				console.log(callee);
 			}
-			var mappedFunctionName = controller.functionMap[ fnName ];
+			var mappedFunctionName = controller.functionMap.get(fnName);
 			if(mappedFunctionName && parentAst.type !== 'AwaitExpression'){
 				if(callee.type === 'Identifier'){
 					callee.name = mappedFunctionName;
@@ -217,7 +217,7 @@ function promisifyAst(ast, parentAst, contextFunction, controller){
 				if(contextFunction && !contextFunction['async']){
 					contextFunction['async'] = true;
 					if(contextFunction.id){
-						controller.functionMap[contextFunction.id.name] = contextFunction.id.name;
+						controller.functionMap.set(contextFunction.id.name, contextFunction.id.name);
 						controller.asyncs++;	
 					}
 				}

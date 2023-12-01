@@ -61,7 +61,7 @@ async function main() {
 	if (controller.asyncs == nAsyncs) {
 	  break;
 	}
-  } //while true
+  }
   
   await Promise.all(parsedFiles.map(generateJS));
   
@@ -124,7 +124,7 @@ async function copyAst(source, target) {
 		await fsp.writeFile(resolvedTarget, fileContent, 'utf-8');
 	  }
     }
-  } //for
+  }
   return parsedFiles;
 }
 
@@ -202,8 +202,20 @@ function promisifyAst(ast, parentAst, contextFunction, controller){
 				console.log('Uncategorized callee');
 				console.log(callee);
 			}
+			var ignoreMethods = [
+				'toString',
+				'valueOf',
+				'toLocaleString',
+				'hasOwnProperty',
+				'isPrototypeOf',
+				'propertyIsEnumerable',
+				'constructor'
+			];
+            if (ignoreMethods.includes(fnName)) {
+                break;
+            }
 			var mappedFunctionName = controller.functionMap[ fnName ];
-			if(mappedFunctionName && parentAst.type !== 'AwaitExpression'){
+			if(fnName && mappedFunctionName && parentAst.type !== 'AwaitExpression'){
 				if(callee.type === 'Identifier'){
 					callee.name = mappedFunctionName;
 				}else if(callee.type === 'MemberExpression'){
@@ -217,23 +229,26 @@ function promisifyAst(ast, parentAst, contextFunction, controller){
 				if(contextFunction && !contextFunction['async']){
 					contextFunction['async'] = true;
 					if(contextFunction.id){
+						let funcName = contextFunction.id.name;
 						controller.functionMap[contextFunction.id.name] = contextFunction.id.name;
+						console.log(funcName + ' has been made async');
 						controller.asyncs++;	
 					}
 				}
+				
 				return awaitCall;
 			}
 			break;
 		default:
 			break;
-	}//switch
+	}
 	
 	for(var k in ast){
 		var replacement = promisifyAst(ast[k], ast, currentContextFunction, controller);
 		if(replacement){
 			ast[k] = replacement;
 		}
-	};//for
+	};
 }
 
 function getExportNames(ast){
@@ -247,7 +262,7 @@ function getExportNames(ast){
       names.push(o.id.name);
       break;
 	}
-  } //for
+  }
   return names;
 }
 

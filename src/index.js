@@ -103,14 +103,16 @@ async function copyAst(source, target) {
       var parsed = path.parse(resolvedSource);
 	  if (parsed.ext in TRANSFORMING_EXTENTIONS) {
 		try {
-	      ast = esprima.parse(fileContent, {range: true, tokens: true, comment: true});		  
+	      	ast = esprima.parse(fileContent, {range: true, tokens: true, comment: true});
+		console.log("migrated file: ", parsed.base,"\n");
 		} catch(err){
 		  console.error('Parse error, ignoring', resolvedSource);
 		  console.error(err);
 		}
-	  } else {
-	    console.log('Not a JS, ignoring', resolvedTarget);
-	  }
+	  } 
+	 // else {
+	 //   console.log('Not a JS, ignoring', resolvedTarget);
+	 // }
 	  
 	  if (ast) {
 		var workFile = resolvedTarget + '.ast.json';

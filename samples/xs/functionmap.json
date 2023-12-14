@@ -12,5 +12,6 @@
   "readDestination": "readDestination",
   "Zip": "Zip",
   "Job": "Job",
-  "next": "next"
+  "next": "next",
+  "close": "close"
 }

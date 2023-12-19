@@ -49,9 +49,7 @@ async function main() {
 	functionMap: JSON.parse(await fsp.readFile(ffunctionMap, 'utf-8'))
   }
   
-  var statSource = await fsp.stat(source);
-  var resolvedTarget = path.join(target, path.basename(source));
-  var parsedFiles = await copyAst(source, resolvedTarget);
+  var parsedFiles = await copyAst(source, target);
   
   while (true) {
 	var nAsyncs = controller.asyncs;
@@ -64,6 +62,11 @@ async function main() {
   }
   
   await Promise.all(parsedFiles.map(generateJS));
+
+  if (!DEBUG) {
+    var astFiles = parsedFiles.map((file) => file.work);
+    await deleteASTFiles(astFiles);
+  }
   
 }
 
@@ -104,10 +107,10 @@ async function copyAst(source, target) {
 	  if (parsed.ext in TRANSFORMING_EXTENTIONS) {
 		try {
 	      	ast = esprima.parse(fileContent, {range: true, tokens: true, comment: true});
-		console.log("migrated file: ", parsed.base,"\n");
+			console.log("migrated file: ", parsed.base,"\n");
 		} catch(err){
-		  console.error('Parse error, ignoring', resolvedSource);
-		  console.error(err);
+		  	console.error('Parse error, ignoring', resolvedSource);
+		  	console.error(err);
 		}
 	  } 
 	 // else {
@@ -233,7 +236,7 @@ function promisifyAst(ast, parentAst, contextFunction, controller){
 					if(contextFunction.id){
 						let funcName = contextFunction.id.name;
 						controller.functionMap[contextFunction.id.name] = contextFunction.id.name;
-						console.log(funcName + ' has been made async');
+						console.log(funcName + ' has been made async\n');
 						controller.asyncs++;	
 					}
 				}
@@ -266,6 +269,17 @@ function getExportNames(ast){
 	}
   }
   return names;
+}
+
+async function deleteASTFiles(filePaths) {
+	for (let filePath of filePaths) {
+	  try {
+		await fsp.unlink(filePath);
+		console.log(`Deleted: ${filePath}\n`);
+	  } catch (error) {
+		console.error(`Error deleting file ${filePath}: `, error);
+	  }
+	}
 }
 
 

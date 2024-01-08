@@ -70,7 +70,7 @@ async function main() {
   
 }
 
-
+/* istanbul ignore next */
 async function copy(source, sourceEnt, target) {
 	console.log('copy', source, '-->', target);
 	if (sourceEnt.isFile()) {

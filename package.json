@@ -34,9 +34,38 @@
     "xs",
     "xsjs"
   ],
-  "scripts": {},
+  "scripts": {
+    "test": "mocha './test/**/*.js'",
+    "coverage": "nyc npm test"
+  },
   "dependencies": {
     "escodegen": "^2.0.0",
     "esprima": "^4.0.0"
+  },
+  "devDependencies": {
+    "chai": "^4.3.4",
+    "mocha": "^10.2.0",
+    "nyc": "^15.1.0",
+    "proxyquire": "^2.1.3",
+    "sinon": "^17.0.1"
+  },
+  "nyc": {
+    "exclude": [
+      "test/",
+      "samples/xs/source/index.js"
+    ],
+    "all": true,
+    "reporter": [
+      "text-summary",
+      "html"
+    ],
+    "show-process-tree": false,
+    "medicine-statistics": false,
+    "per-file": false,
+    "check-coverage": true,
+    "branches": 75,
+    "functions": 80,
+    "lines": 80,
+    "statements": -10
   }
 }
